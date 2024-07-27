@@ -1,0 +1,34 @@
+{
+    "name": "axguowen/think-payment",
+    "description": "Simple Payment Extension For ThinkPHP",
+    "keywords": [
+        "thinkphp",
+        "payment",
+        "pay"
+    ],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "axguowen",
+            "email": "axguowen@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "topthink/framework": "^6.1||^8.0",
+        "alipaysdk/easysdk": "^2.2",
+        "wechatpay/wechatpay": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "think\\": "src"
+        }
+    },
+    "extra": {
+        "think": {
+            "config": {
+                "payment": "src/payment/config.php"
+            }
+        }
+    }
+}
