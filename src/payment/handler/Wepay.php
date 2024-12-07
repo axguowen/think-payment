@@ -38,7 +38,7 @@ class Wepay extends Base
         'mp_appid' => '',
         // APIv3密钥(32字节, 形如md5值), 可在 账户中心->API安全 中设置
         'apiv3_key' => '',
-        // 必填-商户私钥 字符串或路径, 即 API证书 PRIVATE KEY, 可在 账户中心->API安全->申请API证书 里获得
+        // 商户私钥 字符串或路径, 即 API证书 PRIVATE KEY, 可在 账户中心->API安全->申请API证书 里获得
         // 文件名形如: file:///www/your/dir/apiclient_key.pem
         'apiclient_key' => '',
         // 商户公钥证书字符串或路径, 即 API证书 CERTIFICATE, 可在 账户中心->API安全->申请API证书 里获得
@@ -50,7 +50,7 @@ class Wepay extends Base
         'wepay_cert' => '',
         // 微信支付平台证书序列号
         'wepay_cert_serial' => '',
-        // 必填-微信回调url
+        // 微信回调url
         'notify_url' => '',
         // 接入点
         'base_uri' => 'https://api.mch.weixin.qq.com',
