@@ -81,7 +81,7 @@ class Wepay extends Base
      */
     public function getChainable()
     {
-        // 如果存在
+        // 如果不存在
         if(is_null($this->chainable)){
             // 读取私钥证书
             $privateKey = Rsa::from($this->options['apiclient_key'], Rsa::KEY_TYPE_PRIVATE);

@@ -72,30 +72,7 @@ class Alipay extends Base
      */
     protected function init()
     {
-        // 实例化配置对象
-        $config = new Config();
-        // 协议
-        $config->protocol = 'https';
-        // 网关主机
-        $config->gatewayHost = !$this->options['is_sandbox'] ? 'openapi.alipay.com' : 'openapi-sandbox.dl.alipaydev.com';
-        // 加签类型
-        $config->signType = 'RSA2';
-        // 应用ID
-        $config->appId = $this->options['app_id'];
-        // 应用私钥
-        $config->merchantPrivateKey = $this->options['app_private_key'];
-        // 支付宝证书公钥
-        $config->alipayPublicKey = $this->options['alipay_public_key'];
-        // 证书模式
-        if(!empty($this->options['app_public_cert'])){
-            $config->alipayPublicKey = AntCertificationUtil::getPublicKey($this->options['alipay_public_cert']);
-            $config->alipayRootCertSN = AntCertificationUtil::getRootCertSN($this->options['alipay_root_cert']);
-            $config->merchantCertSN = AntCertificationUtil::getCertSN($this->options['app_public_cert']);
-        }
-        //可设置异步通知接收服务地址
-        $config->notifyUrl = $this->options['notify_url'];
-        // 实例化SDK
-        $this->kernel = new EasySDKKernel($config);
+        $this->kernel = null;
     }
 
     /**
@@ -105,6 +82,34 @@ class Alipay extends Base
      */
     public function getKernel()
     {
+        // 如果不存在
+        if(is_null($this->kernel)){
+            // 实例化配置对象
+            $config = new Config();
+            // 协议
+            $config->protocol = 'https';
+            // 网关主机
+            $config->gatewayHost = !$this->options['is_sandbox'] ? 'openapi.alipay.com' : 'openapi-sandbox.dl.alipaydev.com';
+            // 加签类型
+            $config->signType = 'RSA2';
+            // 应用ID
+            $config->appId = $this->options['app_id'];
+            // 应用私钥
+            $config->merchantPrivateKey = $this->options['app_private_key'];
+            // 支付宝证书公钥
+            $config->alipayPublicKey = $this->options['alipay_public_key'];
+            // 证书模式
+            if(!empty($this->options['app_public_cert'])){
+                $config->alipayPublicKey = AntCertificationUtil::getPublicKey($this->options['alipay_public_cert']);
+                $config->alipayRootCertSN = AntCertificationUtil::getRootCertSN($this->options['alipay_root_cert']);
+                $config->merchantCertSN = AntCertificationUtil::getCertSN($this->options['app_public_cert']);
+            }
+            //可设置异步通知接收服务地址
+            $config->notifyUrl = $this->options['notify_url'];
+            // 实例化SDK
+            $this->kernel = new EasySDKKernel($config);
+        }
+        // 返回
         return $this->kernel;
     }
 
