@@ -71,24 +71,7 @@ class Wepay extends Base
      */
     protected function init()
     {
-        // 读取私钥证书
-        $privateKey = Rsa::from($this->options['apiclient_key'], Rsa::KEY_TYPE_PRIVATE);
-        // 微信支付平台证书
-        $certs = ['any' => null];
-        // 如果指定了微信支付平台证书
-        if(!empty($this->options['wepay_cert']) && !empty($this->options['wepay_cert_serial'])) {
-            $certs = [
-                $this->options['wepay_cert_serial'] => Rsa::from($this->options['wepay_cert'], Rsa::KEY_TYPE_PUBLIC),
-            ];
-        }
-        // 实例化客户端
-        $this->chainable = Builder::factory([
-            'mchid' => $this->options['mch_id'],
-            'serial' => $this->options['apiclient_cert_serial'],
-            'privateKey' => $privateKey,
-            'certs' => $certs,
-            'base_uri' => $this->options['base_uri'],
-        ]);
+        $this->chainable = null;
     }
 
     /**
@@ -98,6 +81,28 @@ class Wepay extends Base
      */
     public function getChainable()
     {
+        // 如果存在
+        if(is_null($this->chainable)){
+            // 读取私钥证书
+            $privateKey = Rsa::from($this->options['apiclient_key'], Rsa::KEY_TYPE_PRIVATE);
+            // 微信支付平台证书
+            $certs = ['any' => null];
+            // 如果指定了微信支付平台证书
+            if(!empty($this->options['wepay_cert']) && !empty($this->options['wepay_cert_serial'])) {
+                $certs = [
+                    $this->options['wepay_cert_serial'] => Rsa::from($this->options['wepay_cert'], Rsa::KEY_TYPE_PUBLIC),
+                ];
+            }
+            // 实例化客户端
+            $this->chainable = Builder::factory([
+                'mchid' => $this->options['mch_id'],
+                'serial' => $this->options['apiclient_cert_serial'],
+                'privateKey' => $privateKey,
+                'certs' => $certs,
+                'base_uri' => $this->options['base_uri'],
+            ]);
+        }
+        // 返回
         return $this->chainable;
     }
 
